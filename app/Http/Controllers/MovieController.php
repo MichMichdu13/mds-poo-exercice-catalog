@@ -13,12 +13,19 @@ class MovieController extends Controller
 
     public function list (){
         $page = 1;
-        if (request()->query()!=null){
+        if(request('order_by')==null){
+            $filtre = 'id';
+        }else{
+            $filtre = request('order_by');
+        }
+        
+        if (request('page')!=null){
             $page = intval(request('page'));
-            $movies = Movie::where('id', '<=', 20*intval(request('page')))->where('id', '>', 20*(intval(request('page'))-1))->get();
+            $movies = Movie::orderBy($filtre, 'DESC')->where('id', '<=', 20*intval(request('page')))->where('id', '>', 20*(intval(request('page'))-1))->get();
         }else{
             $movies = Movie::where('id', '<=', 20)->get();
         }
-        return view('movies.list', ['movies' => $movies,'page' => $page]);
+        
+        return view('movies.list', ['movies' => $movies,'page' => $page, 'filtre' => $filtre]);
     }
 }
