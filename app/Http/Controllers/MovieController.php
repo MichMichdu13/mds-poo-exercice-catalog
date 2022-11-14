@@ -28,4 +28,10 @@ class MovieController extends Controller
         
         return view('movies.list', ['movies' => $movies,'page' => $page, 'filtre' => $filtre]);
     }
+
+    public function random (){
+        $movies = Movie::inRandomOrder()->limit(1)->get();
+        $movie = $movies[0];
+        return view('movies.random', ['movies' => $movie]);
+    }
 }
