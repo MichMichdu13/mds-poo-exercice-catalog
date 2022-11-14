@@ -29,11 +29,11 @@
 
         <div class="wrapper">
             @foreach ($movies as $movie)
-            <div>
                 <a href="/movie/{{ $movie->id }}">
                     <img src="{{ $movie->poster }}" alt="{{ $movie->primaryTitle }}">
                 </a>
-            </div>
+                <p>{{ $movie->primaryTitle }}</p>
+                <p>{{ $movie->averageRating }}</p>
             @endforeach
         </div>
     </div>
