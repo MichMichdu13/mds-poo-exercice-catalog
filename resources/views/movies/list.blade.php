@@ -36,6 +36,10 @@
                 <p>{{ $movie->averageRating }}</p>
             @endforeach
         </div>
+        @if ($page != 1)
+            <a href="{{ URL::route('listMovie') }}?page={{ $page-1 }}">Page Précedente</a>
+        @endif
+        <a href="{{ URL::route('listMovie') }}?page={{ $page+1 }}">Page Suivante</a>
     </div>
 </body>
 </html>

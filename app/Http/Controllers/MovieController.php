@@ -12,7 +12,13 @@ class MovieController extends Controller
     }
 
     public function list (){
-        $movies = Movie::where('id', '<=', 20)->get();
-        return view('movies.list', ['movies' => $movies]);
+        $page = 1;
+        if (request()->query()!=null){
+            $page = intval(request('page'));
+            $movies = Movie::where('id', '<=', 20*intval(request('page')))->where('id', '>', 20*(intval(request('page'))-1))->get();
+        }else{
+            $movies = Movie::where('id', '<=', 20)->get();
+        }
+        return view('movies.list', ['movies' => $movies,'page' => $page]);
     }
 }
