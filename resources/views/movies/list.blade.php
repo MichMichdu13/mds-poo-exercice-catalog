@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -23,37 +24,56 @@
         }
     </style>
 </head>
+
 <body>
     <div class="container">
         <h1>{{ config('app.name') }}</h1>
-        <a href="{{ URL::route('listMovie') }}?order_by=id">Pas de Flitre</a>
-        <a href="{{ URL::route('listMovie') }}?order_by=averageRating">Filtre Par Note</a>
-        <a href="{{ URL::route('listMovie') }}?order_by=startYear">Filtre Par Date</a>
+        @if($genre != null)
+            <a href="{{ URL::route('listMovie') }}?order_by=id&genre={{ $genre }}">Pas de Flitre</a>
+            <a href="{{ URL::route('listMovie') }}?order_by=averageRating&genre={{ $genre }}">Filtre Par Note</a>
+            <a href="{{ URL::route('listMovie') }}?order_by=startYear&genre={{ $genre }}">Filtre Par Date</a>
+        @else
+            <a href="{{ URL::route('listMovie') }}?order_by=id">Pas de Flitre</a>
+            <a href="{{ URL::route('listMovie') }}?order_by=averageRating">Filtre Par Note</a>
+            <a href="{{ URL::route('listMovie') }}?order_by=startYear">Filtre Par Date</a>
+        @endif
         <div class="wrapper">
             @foreach ($movies as $movie)
-                <a href="/movie/{{ $movie->id }}">
-                    <img src="{{ $movie->poster }}" alt="{{ $movie->primaryTitle }}">
-                </a>
-                <p>{{ $movie->primaryTitle }}</p>
-                <p>{{ $movie->averageRating }}</p>
+            <a href="/movie/{{ $movie->id }}">
+                <img src="{{ $movie->poster }}" alt="{{ $movie->primaryTitle }}">
+            </a>
+            <p>{{ $movie->primaryTitle }}</p>
+            <p>{{ $movie->averageRating }}</p>
             @endforeach
         </div>
-        @if($filtre == 'id')
-            @if ($page != 1)
-                <a href="{{ URL::route('listMovie') }}?page={{ $page-1 }}">Page Précedente</a>
+
+        @if($genre != null)
+            @if($filtre == 'id')
+                @if ($page != 1)
+                    <a href="{{ URL::route('listMovie') }}?page={{ $page-1 }}&genre={{ $genre }}">Page Précedente</a>
+                @endif
+                <a href="{{ URL::route('listMovie') }}?page={{ $page+1 }}&genre={{ $genre }}">Page Suivante</a>
+            @else
+                @if ($page != 1)
+                    <a href="{{ URL::route('listMovie') }}?page={{ $page-1 }}&order_by={{ $filtre }}&genre={{ $genre }}">Page Précedente</a>
+                @endif
+                <a href="{{ URL::route('listMovie') }}?page={{ $page+1 }}&order_by={{ $filtre }}&genre={{ $genre }}">Page Suivante</a>
             @endif
-            <a href="{{ URL::route('listMovie') }}?page={{ $page+1 }}">Page Suivante</a>
-        @elseif($filtre == 'averageRating')
-            @if ($page != 1)
-                <a href="{{ URL::route('listMovie') }}?page={{ $page-1 }}&order_by=averageRating">Page Précedente</a>
-            @endif
-            <a href="{{ URL::route('listMovie') }}?page={{ $page+1 }}&order_by=averageRating">Page Suivante</a>
         @else
-            @if ($page != 1)
-                <a href="{{ URL::route('listMovie') }}?page={{ $page-1 }}&order_by=startYear">Page Précedente</a>
+            @if($filtre == 'id')
+                @if ($page != 1)
+                    <a href="{{ URL::route('listMovie') }}?page={{ $page-1 }}">Page Précedente</a>
+                @endif
+                <a href="{{ URL::route('listMovie') }}?page={{ $page+1 }}">Page Suivante</a>
+            @else
+                @if ($page != 1)
+                    <a href="{{ URL::route('listMovie') }}?page={{ $page-1 }}&order_by={{ $filtre }}">Page Précedente</a>
+                @endif
+                <a href="{{ URL::route('listMovie') }}?page={{ $page+1 }}&order_by={{ $filtre }}">Page Suivante</a>
             @endif
-            <a href="{{ URL::route('listMovie') }}?page={{ $page+1 }}&order_by=startYear">Page Suivante</a>
         @endif
     </div>
+    {{ dd($genre); }}
 </body>
+
 </html>
