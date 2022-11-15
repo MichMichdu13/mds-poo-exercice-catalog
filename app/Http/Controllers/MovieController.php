@@ -51,6 +51,6 @@ class MovieController extends Controller
     {
         $movies = Movie::inRandomOrder()->limit(1)->get();
         $movie = $movies[0];
-        return view('movies.random', ['movies' => $movies]);
+        return view('movies.random', ['movies' => $movie]);
     }
 }

@@ -73,7 +73,6 @@
             @endif
         @endif
     </div>
-    {{ dd($genre); }}
 </body>
 
 </html>
