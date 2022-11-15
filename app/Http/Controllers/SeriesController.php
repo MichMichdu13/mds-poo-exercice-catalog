@@ -8,8 +8,17 @@ use Illuminate\Http\Request;
 
 class SeriesController extends Controller
 {
+
+    public function show($id)
+    {
+        $series = Series::find($id);
+        $episodes = Series::find($series->id)->episodes()->get();
+        return view('series.show', ['series' => $series, 'episodes' => $episodes]);
+    }
+
     public function list(Request $request)
     {
+        
 
         $query = Series::query();
         $page = 1;

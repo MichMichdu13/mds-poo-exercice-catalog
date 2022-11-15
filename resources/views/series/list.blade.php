@@ -39,7 +39,7 @@
         @endif
         <div class="wrapper">
             @foreach ($series as $serie)
-            <a href="/serie/{{ $serie->id }}">
+            <a href="/series/{{ $serie->id }}">
                 <img src="{{ $serie->poster }}" alt="{{ $serie->primaryTitle }}">
             </a>
             <p>{{ $serie->primaryTitle }}</p>
