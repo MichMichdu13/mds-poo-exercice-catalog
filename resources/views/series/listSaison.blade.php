@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -23,25 +24,22 @@
         }
     </style>
 </head>
+
 <body>
     <div class="container">
         <h1>{{ config('app.name') }}</h1>
-        <a href="/movies">List film</a>/---/
-        <a href="/movies/random">Random film</a>/---/
-        <a href="/genres/list">List genre</a>/---/
-        <a href="/series">List series</a>/---/
-        <a href="/series/random">random series</a>
-        <br><br>
-
         <div class="wrapper">
-            @foreach ($movies as $movie)
-            <div>
-                <a href="/movie/{{ $movie->id }}">
-                    <img src="{{ $movie->poster }}" alt="{{ $movie->primaryTitle }}">
-                </a>
-            </div>
+            @foreach ($episodes as $episode)
+            <a href="/series/{{ $serie->id }}/season/{{ $season_num }}/episode/{{ $episode->episodeNumber }}">
+                <img src="{{ $episode->poster }}" alt="{{ $episode->primaryTitle }}">
+            </a>
+            <p>{{ $episode->primaryTitle }}</p>
+            <p>{{ $episode->averageRating }}</p>
             @endforeach
         </div>
+
+    
     </div>
 </body>
+
 </html>

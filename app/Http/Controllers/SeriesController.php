@@ -12,8 +12,9 @@ class SeriesController extends Controller
     public function show($id)
     {
         $series = Series::find($id);
-        $episodes = Series::find($series->id)->episodes()->get();
-        return view('series.show', ['series' => $series, 'episodes' => $episodes]);
+        $episodes = Series::find($series->id)->episodes()->orderBy('episodeNumber','ASC')->get();
+        $nbSaison = Series::find($series->id)->episodes()->max('seasonNumber'); 
+        return view('series.show', ['series' => $series, 'episodes' => $episodes, 'nbSaison' => $nbSaison]);
     }
 
     public function list(Request $request)
@@ -54,5 +55,24 @@ class SeriesController extends Controller
         $serie = $series[0];
         $episodes = Series::find($serie->id)->episodes()->get();
         return view('series.random', ['series' => $serie, 'episodes' => $episodes]);
+    }
+
+    public function listSaison($id, $season_num){
+        $series = Series::find($id);
+        $episodes = Series::find($series->id)->episodes()->where('seasonNumber',$season_num)->get();
+
+        return view('series.listSaison', ['episodes' => $episodes,'serie'=> $series, 'season_num' => $season_num]);
+    }
+
+    public function showEpisode($id, $season_num, $episode_num){
+
+        $series = Series::find($id);
+        $episodes = Series::find($series->id)
+            ->episodes()
+            ->where('seasonNumber',$season_num)
+            ->where('episodeNumber',$episode_num)
+            ->get();
+        $episodes = $episodes[0];
+        return view('series.showEpisode', ['episodes' => $episodes]);
     }
 }

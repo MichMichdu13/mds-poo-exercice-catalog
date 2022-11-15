@@ -12,7 +12,15 @@
               <p>La note est de {{ $series->averageRating }} sur {{ $series->numVotes }} votes</p>
               <p>nb Episode: {{ count($episodes) }}</p>
             </div>
-            <img class="card-img-right flex-auto d-none d-md-block" alt="" src="{{ $series->poster }}">
+            <img class="card-img-right flex-auto d-none d-md-block" alt="" src="{{ $series->poster }}"><br>
+            @for ($i = 1; $i <= $nbSaison; $i++)
+                <a href="/series/{{ $series->id }}/season/{{ $i }}">Saison {{ $i }}</a><br><br>
+                @foreach($episodes as $episode)
+                    @if($episode->seasonNumber === $i)
+                        <a href="/series/{{ $series->id }}/season/{{ $i }}/episode/{{ $episode->episodeNumber }}">Episode {{ $episode->episodeNumber }}</a><br>
+                    @endif
+                @endforeach
+            @endfor
           </div>
 </body>
 
