@@ -31,7 +31,13 @@
         <a href="/genres/list">List genre</a>/---/
         <a href="/series">List series</a>/---/
         <a href="/series/random">random series</a>
-        <br><br>
+        <br>
+        <form action="/search" method="GET">
+            <input name='query'>
+            <button type="submit">rechercher</button>
+        </form>
+        <br>
+
 
         <div class="wrapper">
             @foreach ($movies as $movie)

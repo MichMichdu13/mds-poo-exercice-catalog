@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Genre;
 use App\Models\Movie;
+use App\Models\Series;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 
@@ -53,4 +54,14 @@ class MovieController extends Controller
         $movie = $movies[0];
         return view('movies.random', ['movies' => $movie]);
     }
+    
+    public static function search(Request $request) {
+        $titleQuery = $request->query('query');
+    
+        return view('search', [
+          'movies' => Movie::where('primaryTitle', 'LIKE', '%'.$titleQuery.'%')->get(),
+          'series' => Series::where('primaryTitle', 'LIKE', '%'.$titleQuery.'%')->get(),
+          'query' => $titleQuery
+        ]);
+      }
 }
